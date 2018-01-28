@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import httplib
+import requests
 
 pin = 7
 last = GPIO.LOW
@@ -12,8 +12,6 @@ while 1:
         currentInput = GPIO.input(pin)
         if currentInput and currentInput != last:
                 print("pin high")
-                conn = httplib.HTTPConnection("www.google.com")
-                conn.request("GET", "/")
-                res = conn.getresponse()
-                print res.status, res.reason
+                r = requests.get('http://174.104.106.130:8080/trigger')
+                print r.status_code
         last = currentInput
